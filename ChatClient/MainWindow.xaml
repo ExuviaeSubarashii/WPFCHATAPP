@@ -1,0 +1,21 @@
+﻿<Window x:Class="ChatClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="971">
+    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" Width="800">
+        <Button Content="Add Server" Name="Button1" Margin="-80,329,820,87" ></Button>
+        <Label Content="Server" Name="servername" Margin="-70,5,820,398"></Label>
+        <Label Content="Channel" Name="channelname" Margin="28,10,716,393"></Label>
+        <DataGrid Name="dataGridView1" Margin="136,4,93,107"></DataGrid>
+        <TextBox Name="textBox1" Margin="136,338,93,16" TextChanged="textBox1_TextChanged" KeyDown="textBox1_KeyDown"></TextBox>
+        <Image Name="picturebox1" Margin="-70,397,790,0"></Image>
+        <Label Content="Name" Name="username" Margin="-75,359,825,44"></Label>
+        <StackPanel x:Name="flyoutPanel1" Margin="-80,50,793,118"/>
+        <StackPanel x:Name="flyoutPanel2" Margin="12,41,700,127"/>
+        <StackPanel x:Name="flyoutPanel3" Margin="786,10,-74,30"/>
+    </Grid>
+</Window>

@@ -112,6 +112,7 @@ namespace ChatClient
         {
             var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
             dataGridView1.ItemsSource = query.ToList();
+            GetServerNames();
         }
 
         private async void GetServerNames()

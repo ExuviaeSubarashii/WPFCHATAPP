@@ -71,6 +71,7 @@ namespace ChatClient
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             LoginForm LF = new LoginForm();
+            LF.Topmost= true;
             LF.ShowDialog();
             System.Windows.Threading.DispatcherTimer timer1 =new System.Windows.Threading.DispatcherTimer();
             timer1.Tick += Timer1_Tick;
@@ -104,11 +105,6 @@ namespace ChatClient
             {
                 picturebox1 = null;
             }
-
-            if (textBox1.Text == "")
-            {
-                Button1.IsEnabled = false;
-            }
             GetServerNames();
         }
 
@@ -133,11 +129,14 @@ namespace ChatClient
                     for (int i = 0; i < sw.Count(); i++)
                     {
                         Button button2 = new Button();
+                        var bc = new BrushConverter();
                         flyoutPanel1.Children.Add(button2);
                         button2.Content = sw[i];
                         button = button2;
+                        button3.Background = (Brush)bc.ConvertFrom("#202225");
+                        button3.Foreground = Brushes.White;
                         button2.Click += HandleClick_Click;
-                        button2.MouseUp += DeleteServers_MouseUp; ;
+                        button2.MouseUp += DeleteServers_MouseUp;
                     }
                 }
                 else
@@ -192,17 +191,21 @@ namespace ChatClient
                 for (int i = 0; i < users.Count(); i++)
                 {
                     Button button2 = new Button();
+                    var bc = new BrushConverter();
                     flyoutPanel3.Children.Add(button2);
                     button2.Content = users[i];
                     button2.FontSize = 12;
                     button2.FontStyle = FontStyles.Italic;
                     buttonuser.Content = button2.Content;
+                    button3.Background = (Brush)bc.ConvertFrom("#202225");
+                    button3.Foreground = Brushes.White;
                 }
             }
         }
 
         string[] sww;
         Button button3 = new Button();
+        
         private async void GetChannelNames()
         {
             flyoutPanel2.Children.Clear();
@@ -217,11 +220,15 @@ namespace ChatClient
                     for (int i = 0; i < sww.Count(); i++)
                     {
                         Button button2 = new Button();
+                        var bc = new BrushConverter();
                         flyoutPanel2.Children.Add(button2);
                         button2.Content = sww[i];
                         button2.FontSize= 12;
                         button2.FontStyle = FontStyles.Italic;
                         button3.Content = button2.Content;
+                        //Background = "#202225" Foreground = "White"
+                        button3.Background= (Brush)bc.ConvertFrom("#202225");
+                        button3.Foreground=Brushes.White;
                         button2.Click += Channel_Click;
                     }
                 }
@@ -239,6 +246,13 @@ namespace ChatClient
         {
             var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
             dataGridView1.ItemsSource = query.ToList();
+        }
+
+        private void ButtonCreateServer_Click(object sender, RoutedEventArgs e)
+        {
+            CreateServer CS = new CreateServer();
+            CS.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            CS.ShowDialog();
         }
     }
 }

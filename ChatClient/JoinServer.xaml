@@ -1,0 +1,45 @@
+﻿<Window x:Class="ChatClient.JoinServer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClient"
+        mc:Ignorable="d"
+        Title="JoinServer" Height="513" Width="543" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Join a Server" FontSize="30" FontWeight="Bold" Margin="142,32,177,-148"/>
+        <Label Content="INIVTE LINK *" Margin="30,100,0,150" FontWeight="bold"  />
+        <TextBox x:Name="inviteLink" Margin="47,137,150,287" Background="LightGray">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label Content="INIVTES SHOULD LOOK LIKE" Margin="34,113,0,300" FontWeight="bold"/>
+        <Label x:Name="link1" Content="LINK1" Margin="50,217,0,-148" HorizontalAlignment="Left" Foreground="Gray" MouseDoubleClick="link1_MouseDoubleClick"/>
+        <Label x:Name="link2" Content="LINK2" Margin="50,231,0,-148" HorizontalAlignment="Left" Foreground="Gray" MouseDoubleClick="link2_MouseDoubleClick"/>
+        <Label x:Name="link3" Content="LINK3" Margin="50,254,0,0"  HorizontalAlignment="Left" Foreground="Gray" MouseDoubleClick="link3_MouseDoubleClick"/>
+        <Button x:Name="dontInvite" Content="Don't Have an Invite?" Margin="30,298,45,140" >
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="back" Content="Back" Margin="1,30,370,50" VerticalAlignment="Bottom">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="joinServer" Content="Join Server" Background="Blue" Foreground="White" Margin="400,400,20,50" >
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

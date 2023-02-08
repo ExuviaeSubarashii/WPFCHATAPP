@@ -50,5 +50,11 @@ namespace ChatClient
             }
             this.Close();
         }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            textBox2.Text = "Email";
+            textBox1.Text = "Password";
+        }
     }
 }

@@ -1,0 +1,56 @@
+﻿<Window x:Class="ChatClient.CreateServer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClient"
+        mc:Ignorable="d"
+        Title="CreateServer" Height="555" Width="443">
+    <Grid HorizontalAlignment="Left" Width="433" Margin="0,0,0,21" Height="531" VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="261*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label x:Name="createServerlabel" Margin="0,10,0,492" HorizontalAlignment="Center" Width="87" RenderTransformOrigin="0.466,0.24" Content="Create Server"/>
+        <Label x:Name="header1" Margin="72,45,55,0" Content="Your server is where you and your friends hang out." Height="26" VerticalAlignment="Top"/>
+        <Button x:Name="createmyOwn" Content="Create My Own" Margin="102,76,103,393">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label Content="Start From a Template" Margin="116,150,147,346"></Label>
+        <Button x:Name="Gaming" Content="Gaming" Margin="102,191,103,278" Background="Transparent">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="schoolButton" Content="School Club" Margin="102,259,103,210" Background="Transparent">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="studyButton" Content="Study Group" Margin="102,327,103,142" Background="Transparent">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label Content="Have an Invite Already?" Margin="0,405,0,98" HorizontalAlignment="Center" Width="140"></Label>
+        <Button x:Name="joinAServer" Content="Join a Server" Margin="102,480,103,2" Background="SlateGray" Grid.RowSpan="2" Click="joinAServer_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+
+
+</Window>

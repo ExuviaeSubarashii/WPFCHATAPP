@@ -5,17 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="971">
-    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" Width="800">
-        <Button Content="Add Server" Name="Button1" Margin="-80,329,820,87" ></Button>
-        <Label Content="Server" Name="servername" Margin="-70,5,820,398"></Label>
-        <Label Content="Channel" Name="channelname" Margin="28,10,716,393"></Label>
-        <DataGrid Name="dataGridView1" Margin="136,4,93,107"></DataGrid>
-        <TextBox Name="textBox1" Margin="136,338,93,16" TextChanged="textBox1_TextChanged" KeyDown="textBox1_KeyDown"></TextBox>
-        <Image Name="picturebox1" Margin="-70,397,790,0"></Image>
-        <Label Content="Name" Name="username" Margin="-75,359,825,44"></Label>
-        <StackPanel x:Name="flyoutPanel1" Margin="-80,50,793,118"/>
-        <StackPanel x:Name="flyoutPanel2" Margin="12,41,700,127"/>
-        <StackPanel x:Name="flyoutPanel3" Margin="786,10,-74,30"/>
+        Title="MainWindow" Height="650" Width="1142" Background="#FF202225">
+    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" Width="781">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="358*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="27*"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="ButtonCreateServer" Margin="-166,0,816,75" Foreground="LightGreen" FontSize="30" HorizontalContentAlignment="Stretch" RenderTransformOrigin="1.201,0.439" Background="#FF202225" Height="56" VerticalAlignment="Bottom" Click="ButtonCreateServer_Click">
+            <TextBlock Text=" +" Height="35" HorizontalAlignment="Left" Width="39" Margin="5,0,0,0"/>
+        </Button>
+        <Label Foreground="White" Content="Server" Name="servername" Margin="-166,0,816,583" RenderTransformOrigin="0.335,0.474" Height="34" VerticalAlignment="Bottom"></Label>
+        <Label Foreground="White" Content="Channel" Name="channelname" Margin="-97,0,737,582" Height="34" VerticalAlignment="Bottom"></Label>
+        <DataGrid Name="dataGridView1" Background="#202225" Margin="10,4,26,107" Grid.ColumnSpan="3"></DataGrid>
+        <TextBox Name="textBox1" Margin="10,536,26,16" TextChanged="textBox1_TextChanged" KeyDown="textBox1_KeyDown" Background="#202225" BorderBrush="White" Grid.ColumnSpan="3"></TextBox>
+        <Image Name="picturebox1" Margin="-167,574,815,-1"></Image>
+        <Label Content="Name" Name="username" Margin="-85,555,734,0" Foreground="White" Height="76" VerticalAlignment="Top"/>
+        <StackPanel x:Name="flyoutPanel1" Background="#202225" Margin="-166,0,796,171" Height="407" VerticalAlignment="Bottom"/>
+        <StackPanel x:Name="flyoutPanel2" Background="#202225" Margin="-75,0,722,171" Height="407" VerticalAlignment="Bottom"/>
+        <StackPanel x:Name="flyoutPanel3" Background="#202225" Margin="123,10,-157,3" Grid.Column="2"/>
     </Grid>
 </Window>

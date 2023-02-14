@@ -45,8 +45,10 @@ namespace ChatClient
         {
 
         }
+        
         string[] sw;
-        Button button = new Button();
+        //Button button = new Button();
+        Button button =new Button();
         private async void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && textBox1.Text != "")
@@ -134,8 +136,8 @@ namespace ChatClient
                         flyoutPanel1.Children.Add(button2);
                         button2.Content = sw[i];
                         button = button2;
-                        button3.Background = (Brush)bc.ConvertFrom("#202225");
-                        button3.Foreground = Brushes.White;
+                        button2.Background = (Brush)bc.ConvertFrom("#202225");
+                        button2.Foreground = Brushes.White;
                         button2.Click += HandleClick_Click;
                         button2.MouseUp += DeleteServers_MouseUp;
                     }
@@ -198,8 +200,8 @@ namespace ChatClient
                     button2.FontSize = 12;
                     button2.FontStyle = FontStyles.Italic;
                     buttonuser.Content = button2.Content;
-                    button3.Background = (Brush)bc.ConvertFrom("#202225");
-                    button3.Foreground = Brushes.White;
+                    button2.Background = (Brush)bc.ConvertFrom("#202225");
+                    button2.Foreground = Brushes.White;
                 }
             }
         }
@@ -228,8 +230,8 @@ namespace ChatClient
                         button2.FontStyle = FontStyles.Italic;
                         button3.Content = button2.Content;
                         //Background = "#202225" Foreground = "White"
-                        button3.Background= (Brush)bc.ConvertFrom("#202225");
-                        button3.Foreground=Brushes.White;
+                        button2.Background = (Brush)bc.ConvertFrom("#202225");
+                        button2.Foreground = Brushes.White;
                         button2.Click += Channel_Click;
                     }
                 }

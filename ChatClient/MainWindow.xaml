@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1142" Background="#FF202225">
     
-    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" Width="781">
+    <Grid Loaded="Grid_Loaded">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="358*"/>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Name="ButtonCreateServer" Margin="-166,0,816,75" Foreground="LightGreen" FontSize="30" HorizontalContentAlignment="Stretch" RenderTransformOrigin="1.201,0.439" Background="#FF202225" Height="56" VerticalAlignment="Bottom" Click="ButtonCreateServer_Click">
+        <Button Name="ButtonCreateServer" Foreground="LightGreen" FontSize="30" Background="#FF202225" Height="56" Width="50" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="ButtonCreateServer_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"></Setter>
@@ -21,31 +21,32 @@
             </Button.Resources>
             <TextBlock Text=" +" Height="35" HorizontalAlignment="Left" Width="39" Margin="5,0,0,0"/>
         </Button>
-        <Label Foreground="White" Content="Server" Name="servername" Margin="-166,0,816,583" RenderTransformOrigin="0.335,0.474" Height="34" VerticalAlignment="Bottom"></Label>
-        <Label Foreground="White" Content="Channel" Name="channelname" Margin="-97,0,737,582" Height="34" VerticalAlignment="Bottom"></Label>
-        <DataGrid Name="dataGridView1" Background="#202225" Margin="10,4,26,107" Grid.ColumnSpan="3">
+        <Label Foreground="White" Margin="100,10,0,0" Content="Server" Name="servername" Grid.Column="3" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label Foreground="White" Content="Channel" Grid.Column="3" Margin="180,10,0,0" Height="100" Width="100" Name="channelname" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+
+        <DataGrid Name="dataGridView1" Background="#202225" Margin="300,0,-500,0" Grid.Column="1" Width="1000" Height="920" HorizontalAlignment="Center" VerticalAlignment="Top">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"></Setter>
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
-        <TextBox Name="textBox1" Margin="10,536,26,16" TextChanged="textBox1_TextChanged" KeyDown="textBox1_KeyDown" Background="#202225" BorderBrush="White" Grid.ColumnSpan="3">
+        <TextBox Name="textBox1" TextChanged="textBox1_TextChanged" KeyDown="textBox1_KeyDown" Background="#202225" Grid.Column="1" Height="100" Width="1001" BorderBrush="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100,0,-700,0">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"></Setter>
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Image Name="picturebox1" Margin="-167,574,815,-1"></Image>
-        <Label Content="Name" Name="username" Margin="-85,555,734,0" Foreground="White" Height="76" VerticalAlignment="Top"/>
-        <StackPanel x:Name="flyoutPanel1" Background="#202225" Margin="-166,0,796,171" Height="407" VerticalAlignment="Bottom">
+        
+        <Label Content="Name" Name="username" Foreground="White" Margin="10,10,-110,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <StackPanel x:Name="flyoutPanel1" Background="#202225" Width="100" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+            
+        </StackPanel>
+        <StackPanel x:Name="flyoutPanel2" Background="#202225" Width="100" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
 
         </StackPanel>
-        <StackPanel x:Name="flyoutPanel2" Background="#202225" Margin="-75,0,722,171" Height="407" VerticalAlignment="Bottom">
-
-        </StackPanel>
-        <StackPanel x:Name="flyoutPanel3" Background="#202225" Margin="123,10,-157,3" Grid.Column="2">
+        <StackPanel x:Name="flyoutPanel3" Background="#202225" Width="100" Grid.Column="7" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
 
         </StackPanel>
     </Grid>

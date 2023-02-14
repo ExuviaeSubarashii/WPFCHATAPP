@@ -93,20 +93,20 @@ namespace ChatClient
             }
             username.Content = AppMain.User.Username;
             GetAll();
-            var imageQuery = (_CP.Users.Where(x => x.Username == AppMain.User.Username).Select(y => y.Image).FirstOrDefault());
-            if (imageQuery != null)
-            {
-                MemoryStream ms = new MemoryStream(imageQuery);
-                Image returnImage = new Image();
-                returnImage.Source = BitmapFrame.Create(ms,
-                                      BitmapCreateOptions.None,
-                                      BitmapCacheOption.OnLoad);
-                picturebox1 = returnImage;
-            }
-            else if (imageQuery == null)
-            {
-                picturebox1 = null;
-            }
+            //var imageQuery = (_CP.Users.Where(x => x.Username == AppMain.User.Username).Select(y => y.Image).FirstOrDefault());
+            //if (imageQuery != null)
+            //{
+            //    MemoryStream ms = new MemoryStream(imageQuery);
+            //    Image returnImage = new Image();
+            //    returnImage.Source = BitmapFrame.Create(ms,
+            //                          BitmapCreateOptions.None,
+            //                          BitmapCacheOption.OnLoad);
+            //    picturebox1 = returnImage;
+            //}
+            //else if (imageQuery == null)
+            //{
+            //    picturebox1 = null;
+            //}
             GetServerNames();
         }
 

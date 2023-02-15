@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="LoginForm" Height="320" Width="477" WindowStartupLocation="CenterScreen" WindowState="Minimized" Background="#202225" Foreground="White" >
+        Title="LoginForm" Height="320" Width="477" WindowStartupLocation="CenterOwner" WindowState="Minimized" Background="#202225" Foreground="White" Topmost="True" >
     <Grid Background="#202225" Margin="81,10,0,2" HorizontalAlignment="Left" Width="327" Loaded="Grid_Loaded">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="26*"/>

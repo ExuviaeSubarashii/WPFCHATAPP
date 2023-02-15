@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1142" Background="#FF202225">
-    
+        Title="MainWindow" Height="650" Width="1142" Background="#FF202225" WindowState="Maximized">
+
     <Grid Loaded="Grid_Loaded">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
@@ -21,8 +21,8 @@
             </Button.Resources>
             <TextBlock Text=" +" Height="35" HorizontalAlignment="Left" Width="39" Margin="5,0,0,0"/>
         </Button>
-        <Label Foreground="White" Margin="100,10,0,0" Content="Server" Name="servername" Grid.Column="3" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
-        <Label Foreground="White" Content="Channel" Grid.Column="3" Margin="180,10,0,0" Height="100" Width="100" Name="channelname" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label  Background="GreenYellow" Foreground="Black" Margin="100,10,0,0" Content="Server" Name="servername" Grid.Column="3" Height="30" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label  Background="GreenYellow" Foreground="Black" Content="Channel" Grid.Column="3" Margin="180,10,0,0" Height="30" Width="50" Name="channelname" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
 
         <DataGrid Name="dataGridView1" Background="#202225" Margin="300,0,-500,0" Grid.Column="1" Width="1000" Height="920" HorizontalAlignment="Center" VerticalAlignment="Top">
             <DataGrid.Resources>
@@ -38,14 +38,28 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        
+        <Image Name="picturebox1" Height="100" Margin="10,10,-110,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <Label Content="Name" Name="username" Foreground="White" Margin="10,10,-110,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <StackPanel x:Name="flyoutPanel1" Background="#202225" Width="100" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-            
+
         </StackPanel>
         <StackPanel x:Name="flyoutPanel2" Background="#202225" Width="100" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
 
         </StackPanel>
+        <TextBox Name="addChannelBox" Background="GreenYellow" Foreground="Black" Width="100" Height="30" Grid.Column="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="15"></Setter>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Button Name="addChannell" Background="#202225" Foreground="White" Content="Add Channel" Width="100" Height="30" Grid.Column="1" Margin="220,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="addChannell_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"></Setter>
+                </Style>
+                </Button.Resources>
+        </Button>
         <StackPanel x:Name="flyoutPanel3" Background="#202225" Width="100" Grid.Column="7" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
 
         </StackPanel>

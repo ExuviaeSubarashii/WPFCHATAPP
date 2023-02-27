@@ -38,10 +38,22 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
+        <Button Name="AddFileButton" Content="+" Height="50" Width="50" Background="Gray" Foreground="White" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-130,0,0,20" Click="AddFileButton_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Image Name="picturebox1" Height="100" Margin="10,10,-110,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <Label Content="Name" Name="username" Foreground="White" Margin="10,10,-110,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <StackPanel x:Name="flyoutPanel1" Background="#202225" Width="100" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Server Settings" Name="ServerSettingsMenuItem" Click="ServerSettingsMenuItem_Click"></MenuItem>
+                    <MenuItem Header="Leave Server" Name="LeaveServerMenuItem" Click="LeaveServerMenuItem_Click"></MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
         </StackPanel>
         <StackPanel x:Name="flyoutPanel2" Background="#202225" Width="100" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
 

@@ -1,4 +1,5 @@
-﻿using Chat.Domain.Models;
+﻿using Chat.Domain.Dtos;
+using Chat.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Chat.Infrastructure
         public static Message Message { get; set; }
         public static Server Servers { get; set; }
 
+        public static UserDTO UserDTO { get; set; }
     }
 }

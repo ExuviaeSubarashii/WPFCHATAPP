@@ -94,7 +94,7 @@ namespace Chat.Domain.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.Server)
-                    .HasMaxLength(310)
+                    .HasMaxLength(7300)
                     .IsUnicode(false)
                     .IsFixedLength();
 

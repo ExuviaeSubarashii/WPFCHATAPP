@@ -56,5 +56,10 @@ namespace ChatClient
             textBox2.Text = "Email";
             textBox1.Text = "Password";
         }
+
+        private void findImage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

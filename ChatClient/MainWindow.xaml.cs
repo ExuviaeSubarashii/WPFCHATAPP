@@ -1,6 +1,8 @@
-﻿using Chat.Domain.Models;
+﻿using Chat.Domain.Dtos;
+using Chat.Domain.Models;
 using Chat.Infrastructure;
 using Chat.Service;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Chat.Service;
+using System.Drawing;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ChatClient
 {
@@ -38,17 +43,17 @@ namespace ChatClient
         ChatContext _CP = new ChatContext();
         private void Form1_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        
+
         string[] sw;
         //Button button = new Button();
-        Button button =new Button();
+        Button button = new Button();
         private async void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && textBox1.Text != "")
@@ -64,8 +69,9 @@ namespace ChatClient
                 var json = JsonConvert.SerializeObject(newMessage);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 await HttpHelper.httpClient.PostAsync($"/api/Messages/SendMessage", content).Result.Content.ReadAsStringAsync();
-                var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
-                dataGridView1.ItemsSource = query.ToList();
+                GetAll();
+                //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
+                //dataGridView1.ItemsSource = query.ToList();
                 textBox1.Clear();
             }
         }
@@ -73,11 +79,11 @@ namespace ChatClient
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             LoginForm LF = new LoginForm();
-            LF.Topmost= true;
+            LF.Topmost = true;
             LF.ShowDialog();
-            System.Windows.Threading.DispatcherTimer timer1 =new System.Windows.Threading.DispatcherTimer();
+            System.Windows.Threading.DispatcherTimer timer1 = new System.Windows.Threading.DispatcherTimer();
             timer1.Tick += Timer1_Tick;
-            timer1.Interval = new TimeSpan(0,0,1);
+            timer1.Interval = new TimeSpan(0, 0, 1);
             timer1.Start();
             servername.Content = "Main";
             channelname.Content = "Main";
@@ -94,7 +100,6 @@ namespace ChatClient
                 return;
             }
             username.Content = AppMain.User.Username;
-            GetAll();
             var imageQuery = (_CP.Users.Where(x => x.Username == AppMain.User.Username).Select(y => y.Image).FirstOrDefault());
             if (imageQuery != null)
             {
@@ -110,6 +115,7 @@ namespace ChatClient
                 picturebox1 = null;
             }
             GetServerNames();
+            GetAll();
         }
 
         private void Timer1_Tick(object? sender, EventArgs e)
@@ -153,33 +159,19 @@ namespace ChatClient
         }
         private async void DeleteServers_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            var btn = sender as Button;
-            User serverUser = new User()
-            {
-                Username = AppMain.User.Username,
-                Server = btn.Content.ToString()
-            };
-            AppMain.User.Server=serverUser.Server;
-            
-            if (e.ButtonState == Mouse.RightButton)
-            {
-                if (btn.Content.ToString().Trim()!="Main")
-                {
-                    MessageBoxResult dialogresult = MessageBox.Show("Do you want to leave from this server?", btn.Content.ToString(), MessageBoxButton.YesNo);
-                    if (dialogresult == MessageBoxResult.Yes)
-                    {
-                        await HttpHelper.httpClient.PutAsJsonAsync($"/api/Users/DeleteServer/", serverUser).Result.Content.ReadAsStringAsync();
-                        GetServerNames();
-                    }
-                }
-            }
+
         }
-        private void HandleClick_Click(object sender, RoutedEventArgs e)
+        private async void HandleClick_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             servername.Content = btn.Content.ToString().Trim();
-            var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
-            dataGridView1.ItemsSource = query.ToList();
+            Message message = new Message()
+            {
+                Server = servername.Content.ToString(),
+                Channel = channelname.Content.ToString()
+            };
+            //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
+            //dataGridView1.ItemsSource = query.ToList();
             GetChannelNames();
             GetUserNames();
         }
@@ -209,7 +201,7 @@ namespace ChatClient
 
         string[] sww;
         Button button3 = new Button();
-        
+
         private async void GetChannelNames()
         {
             flyoutPanel2.Children.Clear();
@@ -227,7 +219,7 @@ namespace ChatClient
                         var bc = new BrushConverter();
                         flyoutPanel2.Children.Add(button2);
                         button2.Content = sww[i];
-                        button2.FontSize= 12;
+                        button2.FontSize = 12;
                         button2.FontStyle = FontStyles.Italic;
                         button3.Content = button2.Content;
                         //Background = "#202225" Foreground = "White"
@@ -245,8 +237,8 @@ namespace ChatClient
             var btn = sender as Button;
             Server server = new Server()
             {
-                ServerName=servername.Content.ToString().Trim(),
-                Channels=btn.Content.ToString().Trim()
+                ServerName = servername.Content.ToString().Trim(),
+                Channels = btn.Content.ToString().Trim()
             };
             if (e.ButtonState == Mouse.RightButton)
             {
@@ -262,20 +254,43 @@ namespace ChatClient
             }
         }
 
-        private void Channel_Click(object sender, RoutedEventArgs e)
+        private async void Channel_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             channelname.Content = btn.Content;
-            var query = _CP.Servers.Where(x => x.ServerName == servername.Content.ToString() && x.Channels == channelname.Content.ToString()).ToList();
-            dataGridView1.ItemsSource = query.ToList();
-           
+            Message message = new Message()
+            {
+                Server = servername.Content.ToString(),
+                Channel = channelname.Content.ToString()
+            };
+            var json = JsonConvert.SerializeObject(message);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await HttpHelper.httpClient.PostAsync($"/api/Messages/GetAll", content).Result.Content.ReadAsStringAsync();
+            List<Message> model = JsonConvert.DeserializeObject<List<Message>>(result);
+            dataGridView1.ItemsSource = model.ToList();
+
+            //if the top does not work
+            //var query = _CP.Servers.Where(x => x.ServerName == servername.Content.ToString() && x.Channels == channelname.Content.ToString()).ToList();
+            //dataGridView1.ItemsSource = query.ToList();
+
         }
 
-        private void GetAll()
+        private async void GetAll()
         {
-            var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
-            dataGridView1.ItemsSource = query.ToList();
-            //dataGridView1.Columns[Convert.ToInt32("Id")].Visibility = Visibility.Collapsed;
+            Message message = new Message()
+            {
+                Server = servername.Content.ToString(),
+                Channel = channelname.Content.ToString()
+            };
+            var json = JsonConvert.SerializeObject(message);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await HttpHelper.httpClient.PostAsync($"/api/Messages/GetAll",content).Result.Content.ReadAsStringAsync();
+            List<Message> model = JsonConvert.DeserializeObject<List<Message>>(result);
+            dataGridView1.ItemsSource = model.ToList();
+
+            //if the top does not work
+            //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
+            //dataGridView1.ItemsSource = query.ToList();
         }
 
         private void ButtonCreateServer_Click(object sender, RoutedEventArgs e)
@@ -293,7 +308,7 @@ namespace ChatClient
                 Channels = addChannelBox.Text.ToString().Trim(),
                 Usernames = AppMain.User.Username,
             };
-            if (addChannelBox.Text == null|| addChannelBox.Text=="")
+            if (addChannelBox.Text == null || addChannelBox.Text == "")
             {
                 MessageBox.Show("Bir kanal ismi ekleyiniz");
                 return;
@@ -304,6 +319,57 @@ namespace ChatClient
             flyoutPanel2.Children.Clear();
             GetChannelNames();
             addChannelBox.Text = "";
+        }
+
+        private void ServerSettingsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = servername.Content.ToString();
+            ServerSettings serverSettings = new ServerSettings();
+            User serverUser = new User()
+            {
+                Username = AppMain.User.Username,
+                Server = btn.ToString()
+            };
+            AppMain.User.Server = serverUser.Server;
+            serverSettings.ShowDialog();
+        }
+
+        private async void LeaveServerMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = button;
+            User serverUser = new User()
+            {
+                Username = AppMain.User.Username,
+                Server = btn.Content.ToString()
+            };
+            AppMain.User.Server = serverUser.Server;
+
+
+            if (btn.Content.ToString().Trim() != "Main")
+            {
+                MessageBoxResult dialogresult = MessageBox.Show("Do you want to leave from this server? If you want to open server settings menu, click `NO`.", btn.Content.ToString(), MessageBoxButton.YesNo);
+                if (dialogresult == MessageBoxResult.Yes)
+                {
+                    await HttpHelper.httpClient.PutAsJsonAsync($"/api/Users/DeleteServer/", serverUser).Result.Content.ReadAsStringAsync();
+                    GetServerNames();
+                }
+            }
+        }
+        private void AddFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //string foto = "";
+            //System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+            //dlg.Title = "Dokuman Ekle";
+
+            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    foto = dlg.FileName;
+            //}
+
+            //System.IO.MemoryStream mstr = new System.IO.MemoryStream();
+            //System.Drawing.Image img = new Bitmap(foto);
+            //img.Save(mstr, img.RawFormat);
+            //byte[] arrImage = mstr.GetBuffer();
         }
     }
 }

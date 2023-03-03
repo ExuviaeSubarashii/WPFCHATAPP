@@ -60,6 +60,11 @@ namespace Chat.Domain.Models
                     .HasMaxLength(310)
                     .IsUnicode(false)
                     .IsFixedLength();
+                entity.Property(e => e.ImageDir)
+                   .HasMaxLength(310)
+                   .IsUnicode(false)
+                   .HasColumnName("ImageDir")
+                   .IsFixedLength();
             });
 
             modelBuilder.Entity<Server>(entity =>

@@ -11,5 +11,7 @@ namespace Chat.Domain.Models
         public string Message1 { get; set; } = null!;
         public string Server { get; set; } = null!;
         public string Channel { get; set; } = null!;
+
+        public string ImageDir { get; set; } = null!;
     }
 }

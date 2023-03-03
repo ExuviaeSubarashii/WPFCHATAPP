@@ -28,6 +28,7 @@ using System.Windows.Threading;
 using Chat.Service;
 using System.Drawing;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.WebRequestMethods;
 
 namespace ChatClient
 {
@@ -41,6 +42,7 @@ namespace ChatClient
             InitializeComponent();
         }
         ChatContext _CP = new ChatContext();
+
         private void Form1_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -52,26 +54,49 @@ namespace ChatClient
         }
 
         string[] sw;
-        //Button button = new Button();
+        string foto = "";
+        OpenFileDialog dlg = new OpenFileDialog();
         Button button = new Button();
+        string MoveToPath = @"C:\Users\Ali\Desktop\ChatApplicationn\Images\";
         private async void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && textBox1.Text != "")
             {
+                if (foto == "" || foto == null)
+                {
+                    foto = "NoImages";
+                }
+
+                //TRY TO IMPLANT THIS
+                else if (foto != "" || foto != null)
+                {
+                    foreach (string _file in dlg.FileNames)
+                    {
+                        FileInfo fi = new FileInfo(_file);
+                        System.IO.File.Move(_file, System.IO.Path.Combine(MoveToPath, fi.Name));
+                    }
+                }
+
                 Message newMessage = new Message()
                 {
                     Message1 = textBox1.Text,
                     SenderName = AppMain.User.Username,
                     SenderTime = DateTime.UtcNow,
                     Server = servername.Content.ToString(),
-                    Channel = channelname.Content.ToString()
+                    Channel = channelname.Content.ToString(),
+                    ImageDir = foto
                 };
+
                 var json = JsonConvert.SerializeObject(newMessage);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 await HttpHelper.httpClient.PostAsync($"/api/Messages/SendMessage", content).Result.Content.ReadAsStringAsync();
-                GetAll();
+                GetAllMessages();
+
+                //if top doesnt work use this
+
                 //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
                 //dataGridView1.ItemsSource = query.ToList();
+
                 textBox1.Clear();
             }
         }
@@ -115,14 +140,14 @@ namespace ChatClient
                 picturebox1 = null;
             }
             GetServerNames();
-            GetAll();
+            GetAllMessages();
         }
 
         private void Timer1_Tick(object? sender, EventArgs e)
         {
             //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
             //dataGridView1.ItemsSource = query.ToList();
-            GetAll();
+            GetAllMessages();
             GetServerNames();
         }
 
@@ -261,7 +286,29 @@ namespace ChatClient
             Message message = new Message()
             {
                 Server = servername.Content.ToString(),
-                Channel = channelname.Content.ToString()
+                Channel = channelname.Content.ToString(),
+                ImageDir = "NoImages"
+            };
+
+            var json = JsonConvert.SerializeObject(message);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await HttpHelper.httpClient.PostAsync($"/api/Messages/GetAll", content).Result.Content.ReadAsStringAsync();
+            List<Message> model = JsonConvert.DeserializeObject<List<Message>>(result);
+
+            dataGridView1.ItemsSource = model.ToList();
+            //if the top does not work
+            //var query = _CP.Servers.Where(x => x.ServerName == servername.Content.ToString() && x.Channels == channelname.Content.ToString()).ToList();
+            //dataGridView1.ItemsSource = query.ToList();
+
+        }
+
+        private async void GetAllMessages()
+        {
+            Message message = new Message()
+            {
+                Server = servername.Content.ToString(),
+                Channel = channelname.Content.ToString(),
+                ImageDir = "NoImages"
             };
             var json = JsonConvert.SerializeObject(message);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -270,26 +317,7 @@ namespace ChatClient
             dataGridView1.ItemsSource = model.ToList();
 
             //if the top does not work
-            //var query = _CP.Servers.Where(x => x.ServerName == servername.Content.ToString() && x.Channels == channelname.Content.ToString()).ToList();
-            //dataGridView1.ItemsSource = query.ToList();
-
-        }
-
-        private async void GetAll()
-        {
-            Message message = new Message()
-            {
-                Server = servername.Content.ToString(),
-                Channel = channelname.Content.ToString()
-            };
-            var json = JsonConvert.SerializeObject(message);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await HttpHelper.httpClient.PostAsync($"/api/Messages/GetAll",content).Result.Content.ReadAsStringAsync();
-            List<Message> model = JsonConvert.DeserializeObject<List<Message>>(result);
-            dataGridView1.ItemsSource = model.ToList();
-
-            //if the top does not work
-            //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()).ToList();
+            //var query = _CP.Messages.Where(x => x.Server == servername.Content.ToString() && x.Channel == channelname.Content.ToString()&&x.ImageDir!="Null").ToList();
             //dataGridView1.ItemsSource = query.ToList();
         }
 
@@ -357,19 +385,12 @@ namespace ChatClient
         }
         private void AddFileButton_Click(object sender, RoutedEventArgs e)
         {
-            //string foto = "";
-            //System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            //dlg.Title = "Dokuman Ekle";
+            dlg.Title = "Dokuman Ekle";
 
-            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    foto = dlg.FileName;
-            //}
-
-            //System.IO.MemoryStream mstr = new System.IO.MemoryStream();
-            //System.Drawing.Image img = new Bitmap(foto);
-            //img.Save(mstr, img.RawFormat);
-            //byte[] arrImage = mstr.GetBuffer();
+            if (dlg.ShowDialog() == true)
+            {
+                foto = dlg.FileName;
+            }
         }
     }
 }
